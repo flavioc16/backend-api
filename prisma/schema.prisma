@@ -1,0 +1,131 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//criar uma migration: yarn prisma migrate dev
+model User {
+  id         String    @id @default(uuid())
+  name       String
+  username   String    @unique
+  password   String
+  role       Role      @default(USER)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+
+  clientes   Cliente[]
+  compras    Compra[]
+  pagamentos Pagamento[]
+
+  @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model Cliente {
+  id         String    @id @default(uuid())
+  nome       String
+  endereco   String    @default("Não informado")
+  referencia String    @default("Não informado")
+  email      String
+  telefone   String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+
+  userId     String
+  user       User       @relation(fields: [userId], references: [id])
+  compras    Compra[]
+  pagamentos Pagamento[]
+  juros      Juros[]    // Relacionamento com Juros (lado inverso)
+
+  @@map("clientes")
+}
+
+model Produto {
+  id          String   @id @default(uuid()) // Identificador único
+  nome        String   // Nome do produto
+  descricao   String   // Descrição do produto
+  precoAVista Float    // Preço à vista do produto
+  precoAPrazo Float    // Preço a prazo do produto
+  created_at  DateTime @default(now()) // Data de criação do produto
+  updated_at  DateTime @updatedAt // Data de atualização do produto
+
+  @@map("produtos") // Mapeamento da tabela
+}
+
+model Compra {
+  id                 String    @id @default(uuid())
+  descricaoCompra    String    @db.VarChar(500)
+  totalCompra        Float
+  valorInicialCompra Float     
+  tipoCompra         Int
+  statusCompra       Int
+  created_at         DateTime  @default(now())
+  updated_at         DateTime  @updatedAt
+  dataDaCompra       DateTime?
+  dataVencimento     DateTime? // Novo campo para a data de vencimento
+  isVencida          Int       @default(0) // 0 para não vencida, 1 para vencida
+
+  userId             String
+  clienteId          String
+  pagamentoId        String?
+
+  user               User       @relation(fields: [userId], references: [id])
+  cliente            Cliente    @relation(fields: [clienteId], references: [id])
+  pagamentos         Pagamento[] @relation("CompraPagamentos") // Um para muitos
+  juros              Juros[]    // Relacionamento com Juros (lado inverso)
+
+  @@map("compras")
+}
+
+
+
+model Pagamento {
+  id             String    @id @default(uuid())
+  valorPagamento Float
+  clienteId      String
+  cliente        Cliente   @relation(fields: [clienteId], references: [id])
+  userId         String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+
+  compraId       String?
+  compra         Compra?    @relation(fields: [compraId], references: [id], name: "CompraPagamentos")
+  user           User      @relation(fields: [userId], references: [id])
+
+  @@map("pagamentos")
+  
+}
+
+model Juros {
+  id           String    @id @default(uuid())
+  valor        Float
+  descricao    String    @db.VarChar(255)
+  created_at   DateTime  @default(now())
+  compraId     String
+  clienteId    String
+
+  compra       Compra    @relation(fields: [compraId], references: [id]) // Relação direta
+  cliente      Cliente   @relation(fields: [clienteId], references: [id])
+
+  @@map("juros")
+}
+
+
+
+
+
+
