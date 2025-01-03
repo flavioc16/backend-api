@@ -1,22 +1,23 @@
 import prismaClient from "../../../prisma";
 
-class CountJurosByTodayService {
-  async execute() {
-    // Obtém a data de hoje no formato correto
-    const today = new Date().toISOString().split('T')[0];
-
-    // Conta os juros adicionados hoje
-    const count = await prismaClient.juros.count({
+class GetJurosByCompraIdService {
+  async execute(id: string) {
+    // Usa findFirst para buscar os juros associados à compra
+    const juros = await prismaClient.juros.findFirst({
       where: {
-        created_at: {
-          gte: new Date(`${today}T00:00:00.000Z`), // Início do dia
-          lte: new Date(`${today}T23:59:59.999Z`), // Fim do dia
-        },
+        compraId: id,  // Usa o campo compraId para buscar os juros
       },
     });
 
-    return { count };
+    if (!juros) {
+      throw new Error("Juros não encontrados para esta compra.");
+    }
+
+    // Retorna o valor dos juros e o total com juros
+    return {
+      juros: juros.valor // Campo 'valor' na tabela de juros
+    };
   }
 }
 
-export { CountJurosByTodayService };
+export { GetJurosByCompraIdService };

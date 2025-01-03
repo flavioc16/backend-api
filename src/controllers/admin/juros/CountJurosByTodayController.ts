@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CountJurosByTodayService } from "../../../services/admin/juros/GetJurosByCompraIdService";
+import { CountJurosByTodayService } from "../../../services/admin/juros/CountJurosByTodayService";
 
 class CountJurosByTodayController {
   async handle(req: Request, res: Response) {
