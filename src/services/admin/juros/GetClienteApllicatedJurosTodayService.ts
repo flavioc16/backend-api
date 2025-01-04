@@ -22,9 +22,19 @@ class GetClienteApllicatedJurosTodayService {
           },
         },
         created_at: true, // Data de criação
+        notification: true, // Campo notification que determina se foi lido ou não
       },
       distinct: ["clienteId"], // Garante que os IDs dos clientes sejam únicos
     });
+
+    // Função para formatar a data para o formato brasileiro (DD/MM/YYYY)
+    const formatDate = (dateString: string) => {
+      const date = new Date(dateString);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    };
 
     // Transforma os dados no formato esperado
     const notifications = clientsWithJuros.map((item) => {
@@ -32,10 +42,10 @@ class GetClienteApllicatedJurosTodayService {
         id: item.clienteId, // ID do cliente
         title: item.cliente?.nome || "Cliente sem nome", // Nome do cliente
         description: "Juros aplicado(s) em compra(s)", // Descrição fixa
-        date: item.created_at.toISOString().split('T')[0], // Data no formato YYYY-MM-DD
-        status: 0, // Sempre como não lido (status 0)
+        date: formatDate(item.created_at.toISOString()), // Data formatada como DD/MM/YYYY
+        status: item.notification ? 1 : 0, // Status baseado no campo notification (0: não lido, 1: lido)
         iconType: "bell", // Tipo de ícone
-        link: `/clientes/${item.clienteId}`, // Link para a página do cliente
+        link: `/dashboard/purchases/${item.clienteId}`, // Link para a página do cliente
       };
     });
 
@@ -44,3 +54,4 @@ class GetClienteApllicatedJurosTodayService {
 }
 
 export { GetClienteApllicatedJurosTodayService };
+    
