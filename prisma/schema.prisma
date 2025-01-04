@@ -68,7 +68,7 @@ model Produto {
 
 model Compra {
   id                 String    @id @default(uuid())
-  descricaoCompra    String    @db.VarChar(500)
+  descricaoCompra    String    @db.VarChar(255)
   totalCompra        Float
   valorInicialCompra Float     
   tipoCompra         Int
@@ -91,6 +91,20 @@ model Compra {
   @@map("compras")
 }
 
+model Juros {
+  id           String    @id @default(uuid())
+  valor        Float
+  descricao    String    @db.VarChar(255)
+  created_at   DateTime  @default(now())
+  compraId     String
+  clienteId    String
+  notification   Boolean   @default(false) 
+
+  compra       Compra    @relation(fields: [compraId], references: [id]) // Relação direta
+  cliente      Cliente   @relation(fields: [clienteId], references: [id])
+
+  @@map("juros")
+}
 
 
 model Pagamento {
@@ -110,19 +124,7 @@ model Pagamento {
   
 }
 
-model Juros {
-  id           String    @id @default(uuid())
-  valor        Float
-  descricao    String    @db.VarChar(255)
-  created_at   DateTime  @default(now())
-  compraId     String
-  clienteId    String
 
-  compra       Compra    @relation(fields: [compraId], references: [id]) // Relação direta
-  cliente      Cliente   @relation(fields: [clienteId], references: [id])
-
-  @@map("juros")
-}
 
 
 
