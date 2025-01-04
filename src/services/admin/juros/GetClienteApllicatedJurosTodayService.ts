@@ -8,7 +8,6 @@ class GetClienteApllicatedJurosTodayService {
     // Busca os clientes com juros aplicados hoje e notificação como false
     const clientsWithJuros = await prismaClient.juros.findMany({
       where: {
-        notification: false, // Apenas registros onde notification é false
         created_at: {
           gte: new Date(`${today}T00:00:00.000Z`), // Início do dia
           lte: new Date(`${today}T23:59:59.999Z`), // Fim do dia
