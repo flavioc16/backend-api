@@ -24,8 +24,11 @@ class GetClienteApllicatedJurosTodayService {
         notification: true, // Campo notification que determina se foi lido ou não
       },
       distinct: ["clienteId"], // Garante que os IDs dos clientes sejam únicos
+      orderBy: {
+        notification: "asc", // Ordena pelo campo notification em ordem crescente (use "desc" para decrescente)
+      },
     });
-
+  
     // Função para formatar a data para o formato brasileiro (DD/MM/YYYY)
     const formatDate = (dateString: string) => {
       const date = new Date(dateString);
