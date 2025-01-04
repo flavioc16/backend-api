@@ -18,6 +18,7 @@ import { GetClientesCountController } from './controllers/admin/client/GetCountC
 
 //Admin Juros Controllers
 import { CountJurosByTodayController } from './controllers/admin/juros/CountJurosByTodayController';
+import { GetClienteApllicatedJurosTodayController } from './controllers/admin/juros/GetClienteApllicatedJurosTodayController';
 
 //Admin Product Controllers
 import { CreateProdutoController } from './controllers/admin/produto/CreateProdutoController';
@@ -92,6 +93,7 @@ router.get('/total/pagamentos', isAuthenticated, authorizeRole('ADMIN'), new Get
 
 //Admin Routes Juros
 router.get('/juros/count', isAuthenticated, authorizeRole('ADMIN'), new CountJurosByTodayController().handle);
+router.get('/juros/clients', isAuthenticated, authorizeRole('ADMIN'), new GetClienteApllicatedJurosTodayController().handle);
 
 //Admin Routes Relatorio
 router.get('/relatorio/compras', isAuthenticated, authorizeRole('ADMIN'), new GetComprasPorDatasController().handle);
