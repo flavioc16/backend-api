@@ -26,6 +26,7 @@ model User {
   clientes   Cliente[]
   compras    Compra[]
   pagamentos Pagamento[]
+  lembretes   Lembrete[]
 
   @@map("users")
 }
@@ -122,6 +123,20 @@ model Pagamento {
 
   @@map("pagamentos")
   
+}
+
+model Lembrete {
+  id             String   @id @default(uuid())             // ID único para o lembrete
+  descricao      String                                   // Descrição do lembrete
+  notification   Boolean  @default(false)                 // Indica se a notificação foi enviada ou não
+  dataCadastro   DateTime @default(now())                 // Data em que o lembrete foi cadastrado
+  created_at     DateTime @default(now())                 // Data de criação do registro
+  updated_at     DateTime @updatedAt                      // Data de última atualização do registro
+
+  userId         String                                   // ID do administrador que criou o lembrete
+  user           User     @relation(fields: [userId], references: [id]) // Relação com o administrador (User)
+
+  @@map("lembretes")                                      // Nome da tabela no banco
 }
 
 

@@ -38,6 +38,13 @@ import { GetCompraByIdController } from './controllers/admin/compra/GetCompraByI
 import { UpdateCompraController } from './controllers/admin/compra/UpdateCompraController';
 import { DeleteCompraController } from './controllers/admin/compra/DeleteCompraController';
 
+//Admin Lembretes Controllers
+import { CreateLembreteController } from './controllers/admin/lembrete/CreateLembreteController';
+import { GetAllLembretesController } from './controllers/admin/lembrete/GetAllLembretesController';
+import { GetLembreteByIdController } from './controllers/admin/lembrete/GetLembreteByIdController';
+import { UpdateLembreteController } from './controllers/admin/lembrete/UpdateLembreteController';
+import { DeleteLembreteController } from './controllers/admin/lembrete/DeleteLembreteController';
+
 //Relatorio
 import { GetComprasPorDatasController } from './controllers/admin/relatorio/GetComprasPorDatasController';
 
@@ -91,6 +98,13 @@ router.delete('/compras', isAuthenticated, authorizeRole('ADMIN'), new DeleteCom
 // Admin Routes Pagamentos
 router.post('/pagamentos', isAuthenticated, authorizeRole('ADMIN'), new CreatePagamentoController().handle);
 router.get('/total/pagamentos', isAuthenticated, authorizeRole('ADMIN'), new GetTotalPagamentosDoDiaController().handle);
+
+//Admin Routes Lembretes
+router.post('/lembrete', isAuthenticated, authorizeRole('ADMIN'), new CreateLembreteController().handle);
+router.get('/lembretes', isAuthenticated, authorizeRole('ADMIN'), new GetAllLembretesController().handle);
+router.get('/lembrete/:id', isAuthenticated, authorizeRole('ADMIN'), new GetLembreteByIdController().handle);
+router.put('/lembrete/:id', isAuthenticated, authorizeRole('ADMIN'), new UpdateLembreteController().handle);
+router.delete('/lembrete/:id', isAuthenticated, authorizeRole('ADMIN'), new DeleteLembreteController().handle);
 
 //Admin Routes 
 router.get('/juros/count', isAuthenticated, authorizeRole('ADMIN'), new CountJurosByTodayController().handle);
