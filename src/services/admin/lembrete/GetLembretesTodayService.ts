@@ -27,7 +27,7 @@ class GetLembretesTodayService {
         // Mapear os lembretes para o formato esperado pelo front-end
         const mappedLembretes = lembretesHoje.map((lembrete) => ({
             id: lembrete.id,
-            title: lembrete.descricao, // Descrição é o título
+            title: "Lembrete para Hoje",
             details: lembrete.descricao, // Ou você pode criar uma descrição mais detalhada aqui
             dueDate: lembrete.dataCadastro, // Data de cadastro pode ser usada como "dueDate"
             status: lembrete.notification, // Usa o campo `notification` como status ou "Pendente" caso não haja valor
