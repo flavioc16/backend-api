@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 class GetLembretesTodayService {
     async execute(userId: string) {
         const today = new Date();
-        
+
         // Fazendo a data de hoje com hora zerada para comparação com o início do dia
         const startOfDay = new Date(today);
         startOfDay.setHours(0, 0, 0, 0); // Hora zerada (00:00:00)
@@ -24,7 +24,17 @@ class GetLembretesTodayService {
             },
         });
 
-        return lembretesHoje;
+        // Mapear os lembretes para o formato esperado pelo front-end
+        const mappedLembretes = lembretesHoje.map((lembrete) => ({
+            id: lembrete.id,
+            title: lembrete.descricao, // Descrição é o título
+            details: lembrete.descricao, // Ou você pode criar uma descrição mais detalhada aqui
+            dueDate: lembrete.dataCadastro, // Data de cadastro pode ser usada como "dueDate"
+            status: "Pendente", // Defina o status conforme necessário (se não houver, pode deixar como "Pendente")
+            link: `/lembretes/${lembrete.id}`, // Crie um link para o lembrete, ou adicione outro campo que você tenha
+        }));
+
+        return mappedLembretes;
     }
 }
 
