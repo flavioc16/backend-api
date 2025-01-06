@@ -30,7 +30,7 @@ class GetLembretesTodayService {
             title: lembrete.descricao, // Descrição é o título
             details: lembrete.descricao, // Ou você pode criar uma descrição mais detalhada aqui
             dueDate: lembrete.dataCadastro, // Data de cadastro pode ser usada como "dueDate"
-            status: "Pendente", // Defina o status conforme necessário (se não houver, pode deixar como "Pendente")
+            status: lembrete.notification, // Usa o campo `notification` como status ou "Pendente" caso não haja valor
             link: `/lembretes/${lembrete.id}`, // Crie um link para o lembrete, ou adicione outro campo que você tenha
         }));
 
