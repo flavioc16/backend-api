@@ -31,7 +31,7 @@ class GetLembretesTodayService {
             details: lembrete.descricao, // Ou você pode criar uma descrição mais detalhada aqui
             dueDate: lembrete.dataCadastro, // Data de cadastro pode ser usada como "dueDate"
             status: lembrete.notification, // Usa o campo `notification` como status ou "Pendente" caso não haja valor
-            link: `/lembretes/${lembrete.id}`, // Crie um link para o lembrete, ou adicione outro campo que você tenha
+            link: `/dashboard/reminders`, // Crie um link para o lembrete, ou adicione outro campo que você tenha
         }));
 
         return mappedLembretes;

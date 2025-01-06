@@ -45,6 +45,7 @@ import { GetLembreteByIdController } from './controllers/admin/lembrete/GetLembr
 import { UpdateLembreteController } from './controllers/admin/lembrete/UpdateLembreteController';
 import { DeleteLembreteController } from './controllers/admin/lembrete/DeleteLembreteController';
 import { GetLembretesTodayController } from './controllers/admin/lembrete/GetLembretesTodayController';
+import { CountLembretesByTodayController } from './controllers/admin/lembrete/CountLembretesByTodayController';
 
 //Relatorio
 import { GetComprasPorDatasController } from './controllers/admin/relatorio/GetComprasPorDatasController';
@@ -107,6 +108,7 @@ router.get('/lembrete/:id', isAuthenticated, authorizeRole('ADMIN'), new GetLemb
 router.put('/lembrete/:id', isAuthenticated, authorizeRole('ADMIN'), new UpdateLembreteController().handle);
 router.delete('/lembrete/:id', isAuthenticated, authorizeRole('ADMIN'), new DeleteLembreteController().handle);
 router.get('/lembretes/today', isAuthenticated, authorizeRole('ADMIN'), new GetLembretesTodayController().handle);
+router.get('/lembretes/count', isAuthenticated, authorizeRole('ADMIN'), new CountLembretesByTodayController().handle);
 
 //Admin Routes 
 router.get('/juros/count', isAuthenticated, authorizeRole('ADMIN'), new CountJurosByTodayController().handle);
