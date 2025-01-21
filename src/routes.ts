@@ -32,11 +32,12 @@ import { GetProdutosCountController } from './controllers/admin/produto/GetCount
 
 // Admin Compra Controllers
 import { GetTotalComprasDoDiaController } from './controllers/admin/compra/GetTotalComprasDoDiaController';
-import { GetAllComprasController } from './controllers/admin/compra/GetComprasController';
+import { GetAllComprasController } from './controllers/admin/compra/GetAllComprasController';
 import { CreateCompraController } from './controllers/admin/compra/CreateCompraController';
 import { GetCompraByIdController } from './controllers/admin/compra/GetCompraByIdController';
 import { UpdateCompraController } from './controllers/admin/compra/UpdateCompraController';
 import { DeleteCompraController } from './controllers/admin/compra/DeleteCompraController';
+import { GetComprasByClienteIdController } from './controllers/admin/compra/GetComprasByClienteIdController';
 
 //Admin Lembretes Controllers
 import { CreateLembreteController } from './controllers/admin/lembrete/CreateLembreteController';
@@ -47,22 +48,23 @@ import { DeleteLembreteController } from './controllers/admin/lembrete/DeleteLem
 import { GetLembretesTodayController } from './controllers/admin/lembrete/GetLembretesTodayController';
 import { CountLembretesByTodayController } from './controllers/admin/lembrete/CountLembretesByTodayController';
 
-//Relatorio
+// Admin Relatorio
 import { GetComprasPorDatasController } from './controllers/admin/relatorio/GetComprasPorDatasController';
 
-// Outros Controllers
+// Admin Outros Controllers
 import { GetComprasPorIdController } from './controllers/admin/GetComprasPorIdClientController';
 
-//Pagamentos
+// Admin Pagamentos
 import { CreatePagamentoController } from './controllers/admin/pagamento/CreatePagamentoController';
 import { GetTotalPagamentosDoDiaController } from './controllers/admin/pagamento/GetTotalPagamentosDoDiaController';
 import { GetPaymentsEntreDatasController } from './controllers/admin/pagamento/GetPaymentsEntreDatasController';
 import { UpdatePagamentoController } from './controllers/admin/pagamento/UpdatePagamentoController';
 import { DeletePagamentoController } from './controllers/admin/pagamento/DeletePagamentoController';
 
-// Middlewares
+// Admin Middlewares
 import { isAuthenticated } from './middlewares/isAuthenticated';
 import { authorizeRole } from './middlewares/authorizeRole';
+
 
 const router = Router();
 
@@ -99,6 +101,7 @@ router.get('/compras', isAuthenticated, authorizeRole('ADMIN'), new GetAllCompra
 router.get('/compras/total-do-dia', isAuthenticated, authorizeRole('ADMIN'), new GetTotalComprasDoDiaController().handle);
 router.get('/compras/:compraId', isAuthenticated, authorizeRole('ADMIN'), new GetCompraByIdController().handle);
 router.delete('/compras', isAuthenticated, authorizeRole('ADMIN'), new DeleteCompraController().handle);
+router.get('/cliente/:clienteId', isAuthenticated, authorizeRole('USER'), new GetComprasByClienteIdController().handle);
 
 // Admin Routes Pagamentos
 router.post('/pagamentos', isAuthenticated, authorizeRole('ADMIN'), new CreatePagamentoController().handle);
@@ -123,6 +126,8 @@ router.put('/juros/clients/:id', isAuthenticated, authorizeRole('ADMIN'), new Up
 
 //Admin Routes Relatorio
 router.get('/relatorio/compras', isAuthenticated, authorizeRole('ADMIN'), new GetComprasPorDatasController().handle);
+
+
 
 
 export { router };
