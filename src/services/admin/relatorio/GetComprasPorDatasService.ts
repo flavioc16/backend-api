@@ -39,6 +39,7 @@ class GetComprasPorDatasService {
         cliente: {
           select: {
             nome: true,
+            referencia: true,
             id: true
           },
         },
