@@ -43,7 +43,7 @@ class GetClienteApllicatedJurosTodayService {
     const notifications = clientsWithJuros.map((item) => {
       const dueDate = item.compra?.dataVencimento 
         ? formatDate(item.compra.dataVencimento.toISOString()) // Convertendo para string
-        : "Data não disponível";
+        : "Data não disponível.";
 
 
       return {
