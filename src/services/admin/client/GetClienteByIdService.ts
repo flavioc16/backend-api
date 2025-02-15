@@ -5,7 +5,10 @@ class GetClienteByIdService {
         const cliente = await prismaClient.cliente.findUnique({
             where: {
                 id: clienteId,
-            }
+            },
+            include: {
+                user: true, // Inclui os dados do usuário associado
+            },
         });
 
         if (!cliente) {
