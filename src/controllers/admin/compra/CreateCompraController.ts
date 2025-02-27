@@ -4,7 +4,7 @@ import { CreateCompraService } from '../../../services/admin/compra/CreateCompra
 class CreateCompraController {
     async handle(req: Request, res: Response) {
         const { descricaoCompra, totalCompra, tipoCompra, statusCompra, clienteId, dataDaCompra, valorInicialCompra } = req.body;
-        const userId = req.user_id; // Pegue o ID do usuário autenticado a partir do middleware de autenticação
+        const userId = req.user_id;
 
         const createCompraService = new CreateCompraService();
 
@@ -17,7 +17,7 @@ class CreateCompraController {
                 statusCompra,
                 clienteId,
                 userId,
-                dataDaCompra, // Passe o campo dataDaCompra
+                dataDaCompra,
             });
 
             return res.json(compra);

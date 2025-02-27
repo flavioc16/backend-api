@@ -50,9 +50,9 @@ class CreateCompraService {
         statusCompra,
         cliente: { connect: { id: clienteId } },
         user: { connect: { id: userId } },
-        dataDaCompra: parsedDate,  // Salva como UTC
-        created_at: parsedDate,    // Salva como UTC
-        dataVencimento: vencimentoDate, // Preenche a data de vencimento
+        dataDaCompra: parsedDate,  
+        created_at: parsedDate,   
+        dataVencimento: vencimentoDate,
       },
     });
 

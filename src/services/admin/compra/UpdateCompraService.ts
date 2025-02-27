@@ -1,4 +1,4 @@
-import prismaClient from "../../../prisma";
+import prismaClient from "../../../prisma"; // Certifique-se de que este caminho está correto
 
 interface CompraRequest {
   id: string;
@@ -32,13 +32,29 @@ class UpdateCompraService {
       throw new Error("Compra não encontrada");
     }
 
+   
+    const currentDate = new Date();
+    let novaDataDaCompra = compraExistente.dataDaCompra;
+
+    if (dataDaCompra) {
+      
+      const dataCompraConvertida = new Date(dataDaCompra);
+      novaDataDaCompra = new Date(dataCompraConvertida);
+      novaDataDaCompra.setUTCHours(
+        currentDate.getUTCHours(),
+        currentDate.getUTCMinutes(),
+        currentDate.getUTCSeconds(),
+        currentDate.getUTCMilliseconds()
+      );
+    }
+
     // Calcula nova data de vencimento, se necessário
     let novaDataVencimento: Date | undefined = undefined;
 
     if (dataDaCompra) {
-      const dataCompraConvertida = new Date(dataDaCompra);
-      novaDataVencimento = new Date(dataCompraConvertida);
+      novaDataVencimento = new Date(novaDataDaCompra);
       novaDataVencimento.setDate(novaDataVencimento.getDate() + 30);
+      novaDataVencimento.setUTCHours(0, 0, 0, 0);
     }
 
     // Atualiza a compra com os novos dados
@@ -46,16 +62,14 @@ class UpdateCompraService {
       where: { id },
       data: {
         descricaoCompra: descricaoCompra ?? compraExistente.descricaoCompra,
-        dataDaCompra: dataDaCompra 
-          ? new Date(dataDaCompra) 
-          : compraExistente.dataDaCompra,
+        dataDaCompra: novaDataDaCompra,
         totalCompra: totalCompra ?? compraExistente.totalCompra,
         valorInicialCompra: valorInicialCompra ?? compraExistente.valorInicialCompra,
         tipoCompra: tipoCompra ?? compraExistente.tipoCompra,
         statusCompra: statusCompra ?? compraExistente.statusCompra,
         dataVencimento: novaDataVencimento 
           ? novaDataVencimento 
-          : compraExistente.dataVencimento, // Mantém a existente, se não for alterada
+          : compraExistente.dataVencimento,
       },
     });
 
