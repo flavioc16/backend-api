@@ -17,9 +17,13 @@ class JurosService {
       // Aplicando os juros nas compras vencidas
       const comprasAtualizadas = [];
       for (const compra of comprasVencidas) {
-        // Calculando o juros, aqui é um exemplo com 5% de juros (ajustar conforme sua lógica)
+        // Calculando os juros, aqui é um exemplo com 5% de juros (ajustar conforme sua lógica)
         const juros = compra.tipoCompra * 0.05;  // 5% de juros
-        const valorComJuros = compra.tipoCompra + juros;
+
+        // Arredondando os juros para 2 casas decimais
+        const jurosArredondado = Math.round(juros * 100) / 100;  // Arredonda para 2 casas decimais
+
+        const valorComJuros = compra.tipoCompra + jurosArredondado;
 
         // Atualizando a compra no banco de dados com o novo valor
         const compraAtualizada = await prismaClient.compra.update({
