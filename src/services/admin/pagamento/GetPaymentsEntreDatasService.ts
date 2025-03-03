@@ -18,7 +18,8 @@ class GetPaymentsEntreDatasService {
                 valorPagamento: true,
                 cliente: {
                     select: {
-                        nome: true
+                        nome: true,
+                        referencia: true
                     }
                 }
             }
