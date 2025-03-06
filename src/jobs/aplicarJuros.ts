@@ -52,7 +52,7 @@ export async function aplicarJuros() {
         await prisma.juros.create({
           data: {
             valor: valorJuros,
-            descricao: `Juros referente ao mês de: ${mesNome} ${ano}`,
+            descricao: `Referente ao mês de: ${mesNome} ${ano}`,
             compraId: compra.id,
             clienteId: compra.clienteId,
           },
@@ -62,7 +62,6 @@ export async function aplicarJuros() {
       }
     }
 
-    console.log(`${comprasVencidas.length} compras processadas. Juros aplicados: R$${totalJurosAplicados.toFixed(2)}`);
   } catch (error) {
     console.error('Erro ao aplicar juros:', error);
   } finally {
