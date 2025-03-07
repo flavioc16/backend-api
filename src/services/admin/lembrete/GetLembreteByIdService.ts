@@ -4,11 +4,9 @@ const prisma = new PrismaClient();
 
 class GetLembreteByIdService {
     async execute(lembreteId: string, userId: string) {
-        // Verifica se o lembrete existe e pertence ao usuário autenticado
         const lembrete = await prisma.lembrete.findFirst({
             where: {
                 id: lembreteId,
-                userId, // Certifica-se de que o lembrete pertence ao usuário autenticado
             },
         });
 
