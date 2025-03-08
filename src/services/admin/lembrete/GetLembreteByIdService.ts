@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 class GetLembreteByIdService {
-    async execute(lembreteId: string, userId: string) {
+    async execute(lembreteId: string) {
         const lembrete = await prisma.lembrete.findFirst({
             where: {
                 id: lembreteId,
