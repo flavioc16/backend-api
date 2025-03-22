@@ -76,8 +76,8 @@ router.get('/me', isAuthenticated, new DetailUserControle().handle);
 
 // Admin Routes new user (login)
 router.post('/users', new CreateUserController().handle);
-router.post('/users/:userId/token', isAuthenticated, authorizeRole('USER'), new RegisterTokenController().handle);
-router.post('/users/:userId/clear-token', isAuthenticated, authorizeRole('USER'), new ClearTokenController().handle);
+router.post('/users/:userId/token', new RegisterTokenController().handle);
+router.post('/users/:userId/clear-token', new ClearTokenController().handle);
 
 
 // Admin Routes Clients
