@@ -3,13 +3,16 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { router } from './routes';
 
-//functions
-import { aplicarJuros } from './jobs/aplicarJuros'; // Importando a função
+// funções
+import { aplicarJuros } from './jobs/aplicarJuros';
+import { enviarNotificacaoDeComprasVencidas } from './jobs/sendPushNotification'; // Ajuste para a nova função
 import { criarBackupJSON } from './jobs/criarBackupJSON';
 import { commitAutomatico } from './jobs/autoCommit';
 import { criarBackupSQL } from './jobs/criarBackupSQL';
 
+// Chamar funções uma vez para iniciar imediatamente
 aplicarJuros();
+enviarNotificacaoDeComprasVencidas();
 //criarBackupSQL();
 //commitAutomatico();
 
@@ -19,12 +22,17 @@ cron.schedule('0 0 * * *', async () => {
   await aplicarJuros();
 });
 
+// Função para enviar notificações de compras vencidas
+cron.schedule('0 7 * * *', async () => {  // Agendado para 9:00 AM todos os dias
+  console.log('Enviando notificações de compras vencidas...');
+  await enviarNotificacaoDeComprasVencidas(); // Chama a função para enviar notificações
+});
+
 // Função de backup SQL
 // cron.schedule('50 11 * * *', async () => {
 //   console.log('Executando backup completo...');
 //   await criarBackupSQL();
 // });
-
 
 // Função de commit (agendado para todos os dias, por exemplo)
 // cron.schedule('55 11 * * *', async () => {
@@ -87,4 +95,3 @@ const port = parseInt(process.env.PORT || '3000', 10);
 app.listen(port, '0.0.0.0', () => {
   console.log(`Servidor rodando na porta ${port}`);
 });
-
