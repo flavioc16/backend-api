@@ -15,6 +15,8 @@ import { GetClienteByIdController } from './controllers/admin/client/GetClienteB
 import { UpdateClienteController } from './controllers/admin/client/UpdateClienteController';
 import { DeleteClienteController } from './controllers/admin/client/DeleteClienteController';
 import { GetClientesCountController } from './controllers/admin/client/GetCountClientsController';
+import { RegisterTokenController } from './controllers/admin/client/RegisterTokenController';
+import { ClearTokenController } from './controllers/admin/client/ClearTokenController';
 
 //Admin Juros Controllers
 import { CountJurosByTodayController } from './controllers/admin/juros/CountJurosByTodayController';
@@ -74,6 +76,8 @@ router.get('/me', isAuthenticated, new DetailUserControle().handle);
 
 // Admin Routes new user (login)
 router.post('/users', new CreateUserController().handle);
+router.post('/users/:userId/token', isAuthenticated, authorizeRole('ADMIN'), new RegisterTokenController().handle);
+router.post('/users/:userId/clear-token', isAuthenticated, authorizeRole('ADMIN'), new ClearTokenController().handle);
 
 
 // Admin Routes Clients

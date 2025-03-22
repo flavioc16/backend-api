@@ -20,6 +20,7 @@ model User {
   username   String    @unique
   password   String
   role       Role      @default(USER)
+  expoPushToken String? 
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 
@@ -37,23 +38,24 @@ enum Role {
 }
 
 model Cliente {
-  id         String    @id @default(uuid())
-  nome       String
-  endereco   String    @default("Não informado")
-  referencia String    @default("Não informado")
-  email      String
-  telefone   String
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
+  id             String     @id @default(uuid())
+  nome           String
+  endereco       String     @default("Não informado")
+  referencia     String     @default("Não informado")
+  email          String
+  telefone       String
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @updatedAt
 
-  userId     String
-  user       User       @relation(fields: [userId], references: [id])
-  compras    Compra[]
-  pagamentos Pagamento[]
-  juros      Juros[]    // Relacionamento com Juros (lado inverso)
+  userId         String
+  user           User       @relation(fields: [userId], references: [id])
+  compras        Compra[]
+  pagamentos     Pagamento[]
+  juros          Juros[]
 
   @@map("clientes")
 }
+
 
 model Produto {
   id          String   @id @default(uuid()) // Identificador único

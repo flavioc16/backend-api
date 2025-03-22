@@ -3,7 +3,7 @@ import { GetComprasPorDatasService } from "../../../services/admin/relatorio/Get
 
 class GetComprasPorDatasController {
   async handle(req: Request, res: Response) {
-    const { dataInicio, dataFim } = req.query; // Receber as datas como query params
+    const { dataInicio, dataFim } = req.query; 
 
     const service = new GetComprasPorDatasService();
 
