@@ -18,8 +18,6 @@ export async function sendPushNotification(expoPushToken: string, title: string,
       'https://exp.host/--/api/v2/push/send',
       message
     );
-
-    console.log('Notificação enviada com sucesso:', response.data);
   } catch (error) {
     console.error('Erro ao enviar notificação:', error);
   }
