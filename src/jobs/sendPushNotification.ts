@@ -11,7 +11,7 @@ export async function sendPushNotification(expoPushToken: string, title: string,
       sound: 'default',
       title: title, // Título da notificação
       body: body,  // Corpo da notificação
-      data: { someData: 'foo' }, // Dados extras que você pode enviar
+      data: { someData: 'foo' },
     };
 
     const response = await axios.post(
@@ -55,16 +55,14 @@ export async function enviarNotificacaoDeComprasVencidas() {
           });
         }
 
-        // Adiciona a compra vencida à lista de compras do cliente
         clientesNotificar.get(cliente.id)?.compras.push(compra);
       }
     }
 
-    // Enviar notificação para cada cliente
     for (const [clienteId, data] of clientesNotificar) {
       const { expoPushToken, compras } = data;
 
-      // Criar a mensagem para a notificação
+
       const numeroComprasVencidas = compras.length;
       const titulo = 'Compras Vencidas';
       const corpo = `Você possui ${numeroComprasVencidas} compras vencidas. Por favor, regularize o pagamento.`;
