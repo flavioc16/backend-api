@@ -23,7 +23,7 @@ cron.schedule('0 0 * * *', async () => {
 });
 
 // Função para enviar notificações de compras vencidas
-cron.schedule('20 9 * * *', async () => {  // Agendado para 7:00 AM todos os dias
+cron.schedule('25 9 * * *', async () => {  // Agendado para 7:00 AM todos os dias
   console.log('Enviando notificações de compras vencidas...');
   await enviarNotificacaoDeComprasVencidas(); // Chama a função para enviar notificações
 });
